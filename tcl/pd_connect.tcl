@@ -12,6 +12,10 @@ namespace eval ::pd_connect:: {
     namespace export register_plugin_dispatch_receiver
 }
 
+set pd_col_foreground "#ffffff"
+set pd_col_background "#040404"
+set pd_col_selection  "#aaaaff"
+
 # TODO figure out how to escape { } properly
 
 proc ::pd_connect::configure_socket {sock} {
@@ -86,6 +90,7 @@ proc ::pd_connect::pd_readsocket {} {
          set cmds_from_pd ""
          if {![catch {uplevel #0 $docmds} errorname]} {
              # we ran the command block without error, reset the buffer
+             ::pdwindow::debug [concat "DOCMDS:" $docmds "\n"]
          } else {
              # oops, error, alert the user:
              global errorInfo

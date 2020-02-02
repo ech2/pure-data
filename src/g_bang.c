@@ -46,24 +46,24 @@ void bng_draw_new(t_bng *x, t_glist *glist)
     int inset = IEMGUI_ZOOM(x);
     t_canvas *canvas = glist_getcanvas(glist);
 
-    sys_vgui(".x%lx.c create rectangle %d %d %d %d -width %d -fill #%6.6x -tags %lxBASE\n",
+    sys_vgui(".x%lx.c create rectangle %d %d %d %d -width %d -fill #%6.6x -outline ${pd_col_foreground} -tags %lxBASE\n",
              canvas, xpos, ypos,
              xpos + x->x_gui.x_w, ypos + x->x_gui.x_h,
              IEMGUI_ZOOM(x),
              x->x_gui.x_bcol, x);
     if(!x->x_gui.x_fsf.x_snd_able)
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags [list %lxOUT%d outlet]\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags [list %lxOUT%d outlet]\n",
              canvas,
              xpos, ypos + x->x_gui.x_h + IEMGUI_ZOOM(x) - ioh,
              xpos + iow, ypos + x->x_gui.x_h,
              x, 0);
     if(!x->x_gui.x_fsf.x_rcv_able)
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags [list %lxIN%d inlet]\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags [list %lxIN%d inlet]\n",
              canvas,
              xpos, ypos,
              xpos + iow, ypos - IEMGUI_ZOOM(x) + ioh,
              x, 0);
-    sys_vgui(".x%lx.c create oval %d %d %d %d -width %d -fill #%6.6x -tags %lxBUT\n",
+    sys_vgui(".x%lx.c create oval %d %d %d %d -width %d -fill #%6.6x -outline ${pd_col_foreground} -tags %lxBUT\n",
              canvas, xpos + inset, ypos + inset,
              xpos + x->x_gui.x_w - inset, ypos + x->x_gui.x_h - inset,
              IEMGUI_ZOOM(x),
@@ -142,7 +142,7 @@ void bng_draw_io(t_bng* x, t_glist* glist, int old_snd_rcv_flags)
     t_canvas *canvas = glist_getcanvas(glist);
 
     if((old_snd_rcv_flags & IEM_GUI_OLD_SND_FLAG) && !x->x_gui.x_fsf.x_snd_able) {
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags %lxOUT%d\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -tags %lxOUT%d\n",
              canvas,
              xpos, ypos + x->x_gui.x_h + IEMGUI_ZOOM(x) - ioh,
              xpos + iow, ypos + x->x_gui.x_h,
@@ -153,7 +153,7 @@ void bng_draw_io(t_bng* x, t_glist* glist, int old_snd_rcv_flags)
     if(!(old_snd_rcv_flags & IEM_GUI_OLD_SND_FLAG) && x->x_gui.x_fsf.x_snd_able)
         sys_vgui(".x%lx.c delete %lxOUT%d\n", canvas, x, 0);
     if((old_snd_rcv_flags & IEM_GUI_OLD_RCV_FLAG) && !x->x_gui.x_fsf.x_rcv_able) {
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags %lxIN%d\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -tags %lxIN%d\n",
              canvas,
              xpos, ypos,
              xpos + iow, ypos - IEMGUI_ZOOM(x) + ioh,
@@ -177,8 +177,8 @@ void bng_draw_select(t_bng* x, t_glist* glist)
     }
     else
     {
-        sys_vgui(".x%lx.c itemconfigure %lxBASE -outline #%6.6x\n", canvas, x, IEM_GUI_COLOR_NORMAL);
-        sys_vgui(".x%lx.c itemconfigure %lxBUT -outline #%6.6x\n", canvas, x, IEM_GUI_COLOR_NORMAL);
+        sys_vgui(".x%lx.c itemconfigure %lxBASE -outline #%6.6x\n", canvas, x, x->x_gui.x_lcol);
+        sys_vgui(".x%lx.c itemconfigure %lxBUT -outline #%6.6x\n", canvas, x, x->x_gui.x_lcol);
         sys_vgui(".x%lx.c itemconfigure %lxLABEL -fill #%6.6x\n", canvas, x, x->x_gui.x_lcol);
     }
 }
@@ -451,9 +451,9 @@ static void *bng_new(t_symbol *s, int argc, t_atom *argv)
     iem_inttosymargs(&x->x_gui.x_isa, 0);
     iem_inttofstyle(&x->x_gui.x_fsf, 0);
 
-    x->x_gui.x_bcol = 0xFCFCFC;
-    x->x_gui.x_fcol = 0x00;
-    x->x_gui.x_lcol = 0x00;
+    x->x_gui.x_bcol = 0x202020;
+    x->x_gui.x_fcol = 0xFFFFFF;
+    x->x_gui.x_lcol = 0xFFFFFF;
 
     if((argc == 14)&&IS_A_FLOAT(argv,0)
        &&IS_A_FLOAT(argv,1)&&IS_A_FLOAT(argv,2)

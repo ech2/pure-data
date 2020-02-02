@@ -375,7 +375,7 @@ proc init_for_platform {} {
         }
         "win32" {
             set ::modifier "Control"
-            option add *PatchWindow*Canvas.background "white" startupFile
+            option add *PatchWindow*Canvas.background "#202020" startupFile
             # fix menu font size on Windows with tk scaling = 1
             font create menufont -family Tahoma -size -11
             option add *Menu.font menufont startupFile

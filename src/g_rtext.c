@@ -332,7 +332,7 @@ static void rtext_senditup(t_rtext *x, int action, int *widthp, int *heightp,
             escbuf,
             sys_hostfontsize(font, glist_getzoom(x->x_glist)),
             (glist_isselected(x->x_glist,
-                &x->x_glist->gl_gobj)? "blue" : "black"));
+                &x->x_glist->gl_gobj)? "${pd_col_selection}" : "${pd_col_foreground}"));
     }
     else if (action == SEND_UPDATE)
     {
@@ -479,7 +479,7 @@ void rtext_select(t_rtext *x, int state)
     t_glist *glist = x->x_glist;
     t_canvas *canvas = glist_getcanvas(glist);
     sys_vgui(".x%lx.c itemconfigure %s -fill %s\n", canvas,
-        x->x_tag, (state? "blue" : "black"));
+        x->x_tag, (state? "${pd_col_selection}" : "${pd_col_foreground}"));
 }
 
 void rtext_activate(t_rtext *x, int state)

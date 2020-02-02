@@ -112,7 +112,7 @@ static void vu_draw_new(t_vu *x, t_glist *glist)
     int fs = x->x_gui.x_fontsize * IEMGUI_ZOOM(x);
     t_canvas *canvas = glist_getcanvas(glist);
 
-    sys_vgui(".x%lx.c create rectangle %d %d %d %d -width %d -fill #%06x -tags %lxBASE\n",
+    sys_vgui(".x%lx.c create rectangle %d %d %d %d -width %d -fill #%06x -outline ${pd_col_foreground} -tags %lxBASE\n",
              canvas, xpos - hmargin, ypos - vmargin,
              xpos+x->x_gui.x_w + hmargin,
              ypos+x->x_gui.x_h + vmargin, IEMGUI_ZOOM(x), x->x_gui.x_bcol, x);
@@ -149,12 +149,12 @@ static void vu_draw_new(t_vu *x, t_glist *glist)
              (x->x_led_size+1)*IEMGUI_ZOOM(x), x->x_gui.x_bcol, x);
     if(!x->x_gui.x_fsf.x_snd_able)
     {
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags [list %lxOUT%d outlet]\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags [list %lxOUT%d outlet]\n",
              canvas,
              xpos - hmargin, ypos + x->x_gui.x_h + vmargin + IEMGUI_ZOOM(x) - ioh,
              xpos - hmargin + iow, ypos + x->x_gui.x_h + vmargin,
              x, 0);
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags [list %lxOUT%d outlet]x\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags [list %lxOUT%d outlet]x\n",
              canvas,
              xpos + x->x_gui.x_w + hmargin - iow, ypos + x->x_gui.x_h + vmargin + IEMGUI_ZOOM(x) - ioh,
              xpos + x->x_gui.x_w + hmargin, ypos + x->x_gui.x_h + vmargin,
@@ -162,12 +162,12 @@ static void vu_draw_new(t_vu *x, t_glist *glist)
     }
     if(!x->x_gui.x_fsf.x_rcv_able)
     {
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags [list %lxIN%d inlet]\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags [list %lxIN%d inlet]\n",
              canvas,
              xpos - hmargin, ypos - vmargin,
              xpos - hmargin + iow, ypos - vmargin - IEMGUI_ZOOM(x) + ioh,
              x, 0);
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags [list %lxIN%d inlet]\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags [list %lxIN%d inlet]\n",
              canvas,
              xpos + x->x_gui.x_w + hmargin - iow, ypos - vmargin,
              xpos + x->x_gui.x_w + hmargin, ypos - vmargin - IEMGUI_ZOOM(x) + ioh,
@@ -321,12 +321,12 @@ static void vu_draw_io(t_vu* x, t_glist* glist, int old_snd_rcv_flags)
 
     if((old_snd_rcv_flags & IEM_GUI_OLD_SND_FLAG) && !x->x_gui.x_fsf.x_snd_able)
     {
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags %lxOUT%d\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags %lxOUT%d\n",
              canvas,
              xpos - hmargin, ypos + x->x_gui.x_h + vmargin + IEMGUI_ZOOM(x) - ioh,
              xpos - hmargin + iow, ypos + x->x_gui.x_h + vmargin,
              x, 0);
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags %lxOUT%d\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags %lxOUT%d\n",
              canvas,
              xpos + x->x_gui.x_w + hmargin - iow, ypos + x->x_gui.x_h + vmargin + IEMGUI_ZOOM(x) - ioh,
              xpos + x->x_gui.x_w + hmargin, ypos + x->x_gui.x_h + vmargin,
@@ -341,12 +341,12 @@ static void vu_draw_io(t_vu* x, t_glist* glist, int old_snd_rcv_flags)
     }
     if((old_snd_rcv_flags & IEM_GUI_OLD_RCV_FLAG) && !x->x_gui.x_fsf.x_rcv_able)
     {
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags %lxIN%d\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags %lxIN%d\n",
              canvas,
              xpos - hmargin, ypos - vmargin,
              xpos - hmargin + iow, ypos - vmargin - IEMGUI_ZOOM(x) + ioh,
              x, 0);
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill black -tags %lxIN%d\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill ${pd_col_foreground} -outline ${pd_col_foreground} -tags %lxIN%d\n",
              canvas,
              xpos + x->x_gui.x_w + hmargin - iow, ypos - vmargin,
              xpos + x->x_gui.x_w + hmargin, ypos - vmargin - IEMGUI_ZOOM(x) + ioh,
@@ -662,8 +662,8 @@ static void *vu_new(t_symbol *s, int argc, t_atom *argv)
     iem_inttofstyle(&x->x_gui.x_fsf, 0);
 
     x->x_gui.x_bcol = 0x404040;
-    x->x_gui.x_fcol = 0x00;
-    x->x_gui.x_lcol = 0x00;
+    x->x_gui.x_fcol = 0xFFFFFF;
+    x->x_gui.x_lcol = 0xFFFFFF;
 
     if((argc >= 11)&&IS_A_FLOAT(argv,0)&&IS_A_FLOAT(argv,1)
        &&(IS_A_SYMBOL(argv,2)||IS_A_FLOAT(argv,2))

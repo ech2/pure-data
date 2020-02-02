@@ -174,7 +174,7 @@ void glist_selectline(t_glist *x, t_outconnect *oc, int index1,
         x->gl_editor->e_selectline_index2 = index2;
         x->gl_editor->e_selectline_inno = inno;
         x->gl_editor->e_selectline_tag = oc;
-        sys_vgui(".x%lx.c itemconfigure l%lx -fill blue\n",
+        sys_vgui(".x%lx.c itemconfigure l%lx -fill ${pd_col_selection}\n",
             x, x->gl_editor->e_selectline_tag);
     }
 }
@@ -184,7 +184,7 @@ void glist_deselectline(t_glist *x)
     if (x->gl_editor)
     {
         x->gl_editor->e_selectedline = 0;
-        sys_vgui(".x%lx.c itemconfigure l%lx -fill black\n",
+        sys_vgui(".x%lx.c itemconfigure l%lx -fill ${pd_col_foreground}\n",
             x, x->gl_editor->e_selectline_tag);
     }
 }
@@ -2427,7 +2427,7 @@ static void canvas_doclick(t_canvas *x, int xpos, int ypos, int which,
                         x->gl_editor->e_xwas = xpos;
                         x->gl_editor->e_ywas = ypos;
                         sys_vgui(
-                            ".x%lx.c create line %d %d %d %d -width %d -tags x\n",
+                            ".x%lx.c create line %d %d %d %d -fill ${pd_col_foreground} -width %d -tags x\n",
                             x, xpos, ypos, xpos, ypos,
                             (issignal ? 2 : 1) * x->gl_zoom);
                     }
@@ -2572,7 +2572,7 @@ static void canvas_doclick(t_canvas *x, int xpos, int ypos, int which,
     if (doit)
     {
         if (!shiftmod) glist_noselect(x);
-        sys_vgui(".x%lx.c create rectangle %d %d %d %d -tags x\n",
+        sys_vgui(".x%lx.c create rectangle %d %d %d %d -outline ${pd_col_foreground} -tags x\n",
             x, xpos, ypos, xpos, ypos);
         x->gl_editor->e_xwas = xpos;
         x->gl_editor->e_ywas = ypos;
@@ -2638,7 +2638,7 @@ static int tryconnect(t_canvas*x, t_object*src, int nout, t_object*sink, int nin
                 + iom;
             ly2 = y21;
             sys_vgui(
-                ".x%lx.c create line %d %d %d %d -width %d -tags [list l%lx cord]\n",
+                ".x%lx.c create line %d %d %d %d -fill ${pd_col_foreground} -width %d -tags [list l%lx cord]\n",
                 glist_getcanvas(x),
                 lx1, ly1, lx2, ly2,
                 (obj_issignaloutlet(src, nout) ? 2 : 1) *
@@ -4334,7 +4334,7 @@ void canvas_connect(t_canvas *x, t_floatarg fwhoout, t_floatarg foutno,
     if (glist_isvisible(x))
     {
         sys_vgui(
-            ".x%lx.c create line %d %d %d %d -width %d -tags [list l%lx cord]\n",
+            ".x%lx.c create line %d %d %d %d -fill ${pd_col_foreground} -width %d -tags [list l%lx cord]\n",
             glist_getcanvas(x), 0, 0, 0, 0,
             (obj_issignaloutlet(objsrc, outno) ? 2 : 1) * x->gl_zoom, oc);
         canvas_fixlinesfor(x, objsrc);

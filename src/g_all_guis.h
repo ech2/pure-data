@@ -36,7 +36,7 @@
 #define IEM_GUI_COLNR_D_BLUE         28
 #define IEM_GUI_COLNR_D_MAGENTA      29
 
-#define IEM_GUI_COLOR_SELECTED       255
+#define IEM_GUI_COLOR_SELECTED       0xAAAAFF // FIXME: why doesn't it work?
 #define IEM_GUI_COLOR_NORMAL         0
 
 #define IEM_GUI_MAX_COLOR            30

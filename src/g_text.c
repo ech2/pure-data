@@ -897,7 +897,7 @@ static void gatom_vis(t_gobj *z, t_glist *glist, int vis)
                 (double)x1, (double)y1,
                 canvas_realizedollar(x->a_glist, x->a_label)->s_name,
                 sys_hostfontsize(glist_getfont(glist), glist_getzoom(glist)),
-                "black");
+                "${pd_col_foreground}");
         }
         else sys_vgui(".x%lx.c delete %lx.l\n", glist_getcanvas(glist), x);
     }
@@ -1093,7 +1093,7 @@ static void text_select(t_gobj *z, t_glist *glist, int state)
     rtext_select(y, state);
     if (glist_isvisible(glist) && gobj_shouldvis(&x->te_g, glist))
         sys_vgui(".x%lx.c itemconfigure %sR -fill %s\n", glist,
-            rtext_gettag(y), (state? "blue" : "black"));
+            rtext_gettag(y), (state? "${pd_col_selection}" : "${pd_col_foreground}"));
 }
 
 static void text_activate(t_gobj *z, t_glist *glist, int state)
@@ -1279,7 +1279,7 @@ void glist_drawiofor(t_glist *glist, t_object *ob, int firsttime,
         int onset = x1 + (width - iow) * i / nplus;
         if (firsttime)
             sys_vgui(".x%lx.c create rectangle %d %d %d %d "
-                "-tags [list %so%d outlet] -fill black\n",
+                "-tags [list %so%d outlet] -fill ${pd_col_foreground} -outline ${pd_col_foreground}\n",
                 glist_getcanvas(glist),
                 onset, y2 - oh + glist->gl_zoom,
                 onset + iow, y2,
@@ -1297,7 +1297,7 @@ void glist_drawiofor(t_glist *glist, t_object *ob, int firsttime,
         int onset = x1 + (width - iow) * i / nplus;
         if (firsttime)
             sys_vgui(".x%lx.c create rectangle %d %d %d %d "
-                "-tags [list %si%d inlet] -fill black\n",
+                "-tags [list %si%d inlet] -fill ${pd_col_foreground} -outline ${pd_col_foreground}\n",
                 glist_getcanvas(glist),
                 onset, y1,
                 onset + iow, y1 + ih - glist->gl_zoom,
@@ -1322,7 +1322,7 @@ void text_drawborder(t_text *x, t_glist *glist,
     {
         char *pattern = ((pd_class(&x->te_pd) == text_class) ? "-" : "\"\"");
         if (firsttime)
-            sys_vgui(".x%lx.c create line %d %d %d %d %d %d %d %d %d %d "
+            sys_vgui(".x%lx.c create line %d %d %d %d %d %d %d %d %d %d -fill ${pd_col_foreground} "
                 " -dash %s -width %d -capstyle projecting -tags [list %sR obj]\n",
                 glist_getcanvas(glist),
                 x1, y1,  x2, y1,  x2, y2,  x1, y2,  x1, y1,  pattern,
@@ -1341,7 +1341,7 @@ void text_drawborder(t_text *x, t_glist *glist,
         corner = ((y2-y1)/4);
         if (corner > 10*glist->gl_zoom) corner = 10*glist->gl_zoom; /* looks bad if too big */
         if (firsttime)
-            sys_vgui(".x%lx.c create line %d %d %d %d %d %d %d %d %d %d %d %d %d %d "
+            sys_vgui(".x%lx.c create line %d %d %d %d %d %d %d %d %d %d %d %d %d %d -fill ${pd_col_foreground} "
                 "-width %d -capstyle projecting -tags [list %sR msg]\n",
                 glist_getcanvas(glist),
                 x1, y1,  x2+corner, y1,  x2, y1+corner,  x2, y2-corner,  x2+corner, y2,
@@ -1357,7 +1357,7 @@ void text_drawborder(t_text *x, t_glist *glist,
     {
         corner = ((y2-y1)/4);
         if (firsttime)
-            sys_vgui(".x%lx.c create line %d %d %d %d %d %d %d %d %d %d %d %d "
+            sys_vgui(".x%lx.c create line %d %d %d %d %d %d %d %d %d %d %d %d -fill ${pd_col_foreground} "
                 "-width %d -capstyle projecting -tags [list %sR atom]\n",
                 glist_getcanvas(glist),
                 x1, y1,  x2-corner, y1,  x2, y1+corner, x2, y2,  x1, y2,  x1, y1,
@@ -1373,7 +1373,7 @@ void text_drawborder(t_text *x, t_glist *glist,
     else if (x->te_type == T_TEXT && glist->gl_edit)
     {
         if (firsttime)
-            sys_vgui(".x%lx.c create line %d %d %d %d -tags [list %sR commentbar]\n",
+            sys_vgui(".x%lx.c create line %d %d %d %d -fill ${pd_col_foreground} -tags [list %sR commentbar]\n",
                 glist_getcanvas(glist),
                 x2, y1,  x2, y2, tag);
         else

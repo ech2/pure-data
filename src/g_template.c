@@ -1087,9 +1087,9 @@ static void *curve_new(t_symbol *classsym, int argc, t_atom *argv)
     x->x_flags = flags;
     if ((flags & CLOSED) && argc)
         fielddesc_setfloatarg(&x->x_fillcolor, argc--, argv++);
-    else fielddesc_setfloat_const(&x->x_fillcolor, 0);
+    else fielddesc_setfloat_const(&x->x_fillcolor, 0xFFFFFF);
     if (argc) fielddesc_setfloatarg(&x->x_outlinecolor, argc--, argv++);
-    else fielddesc_setfloat_const(&x->x_outlinecolor, 0);
+    else fielddesc_setfloat_const(&x->x_outlinecolor, 0xFFFFFF);
     if (argc) fielddesc_setfloatarg(&x->x_width, argc--, argv++);
     else fielddesc_setfloat_const(&x->x_width, 1);
     if (argc < 0) argc = 0;
@@ -1479,7 +1479,7 @@ static void *plot_new(t_symbol *classsym, int argc, t_atom *argv)
     if (argc) fielddesc_setarrayarg(&x->x_data, argc--, argv++);
     else fielddesc_setfloat_const(&x->x_data, 1);
     if (argc) fielddesc_setfloatarg(&x->x_outlinecolor, argc--, argv++);
-    else fielddesc_setfloat_const(&x->x_outlinecolor, 0);
+    else fielddesc_setfloat_const(&x->x_outlinecolor, 0xFFFFFF); // FIXME: 0xFFFFFF doesn't work?
     if (argc) fielddesc_setfloatarg(&x->x_width, argc--, argv++);
     else fielddesc_setfloat_const(&x->x_width, 1);
     if (argc) fielddesc_setfloatarg(&x->x_xloc, argc--, argv++);
@@ -1810,7 +1810,7 @@ static void plot_vis(t_gobj *z, t_glist *glist,
                 if (i == nelem-1 || inextx != ixpix)
                 {
                     sys_vgui(".x%lx.c create rectangle %d %d %d %d "
-                        "-fill black -width 0 -tags [list plot%lx array]\n",
+                        "-fill ${pd_col_foreground} -width 0 -tags [list plot%lx array]\n",
                         glist_getcanvas(glist),
                         ixpix, (int)glist_ytopixels(glist,
                             basey + fielddesc_cvttocoord(yfielddesc, minyval)),
@@ -2467,7 +2467,7 @@ static void *drawnumber_new(t_symbol *classsym, int argc, t_atom *argv)
     if (argc) fielddesc_setfloatarg(&x->x_yloc, argc--, argv++);
     else fielddesc_setfloat_const(&x->x_yloc, 0);
     if (argc) fielddesc_setfloatarg(&x->x_color, argc--, argv++);
-    else fielddesc_setfloat_const(&x->x_color, 1);
+    else fielddesc_setfloat_const(&x->x_color, 0xFFFFFF);
     if (argc)
         x->x_label = atom_getsymbolarg(0, argc, argv);
     else x->x_label = &s_;
